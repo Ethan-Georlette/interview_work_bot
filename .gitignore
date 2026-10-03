@@ -5,8 +5,7 @@
 __pycache__/
 *.pyc
 .idea/
-.env
-./.vscode/*
+.vscode/*
 
 # ================================
 # enviorment/secrets
