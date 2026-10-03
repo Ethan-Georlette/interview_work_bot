@@ -1,0 +1,32 @@
+# ======================================
+# Genral 
+# ===============================
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.env
+./.vscode/*
+
+# ================================
+# enviorment/secrets 
+# ==============================
+.env
+*.env.local
+.env.*
+
+# ==========================
+# Docker 
+# ========================
+# Ignore all container data
+docker/**/data/
+docker/**/config/
+docker/**/logs/
+
+# ======================
+# DATA files (user relative)
+# ===================
+data/question.jsonl
+data/currennt_session.josn
+data/summaries/*
+
