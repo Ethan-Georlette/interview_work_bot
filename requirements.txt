@@ -1,0 +1,8 @@
+# container related
+docker
+docker compose
+gpu container-toolkit
+
+# pip python related
+requests
+

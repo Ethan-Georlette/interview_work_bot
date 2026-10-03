@@ -1,17 +1,8 @@
 # entering_point
+from app.agent import build_question_prompt, ask_ollama
+from app.storage import load_memory_context
 
-from app.models import Question, QuestionCategory
-from app.storage import save_question
-
-
-question = Question(
-    id="test-1",
-    category=QuestionCategory.DOCKER,
-    difficulty=5,
-    question="How does Docker bridge networking work?",
-    concepts=["bridge", "networking", "dns"],
-    estimated_minutes=15,
-    created_at="2026-09-30",
-)
-
-save_question(question)
+memory_context = load_memory_context()
+prompt = build_question_prompt(memory_context)
+answer = ask_ollama(prompt)
+print(answer)

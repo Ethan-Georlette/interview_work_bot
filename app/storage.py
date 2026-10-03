@@ -14,6 +14,7 @@ def save_question(question: Question) -> None:
     except OSError as error:
         print(f"Could not write question: {error}")
 
+
 def load_memory_context() -> list[str]:
     try:
         with open(QUESTIONS_FILE, "r", encoding="utf-8") as file:
@@ -25,5 +26,3 @@ def load_memory_context() -> list[str]:
     except OSError as error:
         print(f"could not read from file: {error}")
         return []
-
-
