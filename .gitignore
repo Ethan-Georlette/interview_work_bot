@@ -1,5 +1,5 @@
 # ======================================
-# Genral 
+# Genral
 # ===============================
 .venv/
 __pycache__/
@@ -9,14 +9,14 @@ __pycache__/
 ./.vscode/*
 
 # ================================
-# enviorment/secrets 
+# enviorment/secrets
 # ==============================
 .env
 *.env.local
 .env.*
 
 # ==========================
-# Docker 
+# Docker
 # ========================
 # Ignore all container data
 docker/**/data/
@@ -27,6 +27,6 @@ docker/**/logs/
 # DATA files (user relative)
 # ===================
 data/questions.jsonl
-data/currennt_session.json
+data/current_session.json
 data/summaries/*
 
