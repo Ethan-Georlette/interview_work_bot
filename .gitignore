@@ -27,6 +27,6 @@ docker/**/logs/
 # DATA files (user relative)
 # ===================
 data/questions.jsonl
-data/currennt_session.josn
+data/currennt_session.json
 data/summaries/*
 
