@@ -1,5 +1,4 @@
 # communitcation with ollama agent
-from typing import List
 
 import requests
 
@@ -9,8 +8,8 @@ from app.decorators import require_active_session
 
 
 def build_question_prompt(memory_context: list[str]) -> str:
-    return "write an interview question here are the recent topics"\
-    + ", ".join(memory_context)
+    return "write an interview question here are the recent topics" \
+        + ", ".join(memory_context)
 
 
 def ask_ollama(prompt: str) -> GeneratedQuestion | None:
@@ -47,15 +46,13 @@ def ask_ollama(prompt: str) -> GeneratedQuestion | None:
 
 
 @require_active_session
-def generate_question(memory_context: List[str], session: WorkSession) -> Question | None:
-    try:
-        prompt = build_question_prompt(memory_context)
-        answer = ask_ollama(prompt)
-        session.questions_asked+=1
-        save_curr_session(session)
-        question=Question.from_generated(answer)
-        save_question(question)
-        return question
-    except:
+def generate_question(memory_context: list[str], session: WorkSession) -> Question | None:
+    prompt = build_question_prompt(memory_context)
+    answer = ask_ollama(prompt)
+    if answer is None:
         return None
-
+    question = Question.from_generated(answer)
+    save_question(question)
+    session.questions_asked += 1
+    save_curr_session(session)
+    return question

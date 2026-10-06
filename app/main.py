@@ -1,10 +1,16 @@
-# entering_point
-from app.agent import build_question_prompt, ask_ollama, generate_question
+# entering point
+from app.scheduler import scheduler, schedule_next_question
 from app.session import start_session
-from app.storage import load_memory_context, save_curr_session
+from app.storage import save_curr_session
 
-session = start_session()
-save_curr_session(session)
-mem = load_memory_context()
-question = generate_question(mem,session)
-print(question)
+
+if __name__ == "__main__":
+    session = start_session()
+    save_curr_session(session)
+
+    scheduler.start()
+    schedule_next_question()
+
+    input("Scheduler running. Press Enter to stop...\n")
+
+    scheduler.shutdown()

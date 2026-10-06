@@ -1,11 +1,12 @@
 # read and write to the json
-from app.models import Question, WorkSession
-
 from pathlib import Path
 
-DATA_DIR = Path(__file__).parent.parent/"data"
+from app.models import Question, WorkSession
+
+
+DATA_DIR = Path(__file__).parent.parent / "data"
 QUESTIONS_FILE = DATA_DIR / "questions.jsonl"
-SESSION_FILE = DATA_DIR/"current_session.json"
+SESSION_FILE = DATA_DIR / "current_session.json"
 
 # __________________ question part _____________________
 
@@ -13,7 +14,7 @@ SESSION_FILE = DATA_DIR/"current_session.json"
 def save_question(question: Question) -> None:
     try:
         with open(QUESTIONS_FILE, "a", encoding="utf-8") as file:
-            file.write(question.model_dump_json()+"\n")
+            file.write(question.model_dump_json() + "\n")
     except OSError as error:
         print(f"Could not write question: {error}")
 
@@ -44,8 +45,9 @@ def save_curr_session(session: WorkSession) -> None:
 def load_curr_session() -> WorkSession | None:
     try:
         with open(SESSION_FILE, "r", encoding="utf-8") as file:
-                session = WorkSession.model_validate_json(file.read())
-                return session
+            line = file.read()
+            session = WorkSession.model_validate_json(line)
+            return session
     except OSError as error:
         print(f"could not read from file: {error}")
         return None

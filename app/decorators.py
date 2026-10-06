@@ -7,6 +7,5 @@ def require_active_session(func):
         session = load_curr_session()
         if session is not None and session.is_active:
             return func(*args, **kwargs)
-
         return None
     return wrapper

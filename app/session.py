@@ -7,7 +7,8 @@ from app.models import WorkSession
 
 
 def start_session() -> WorkSession:
-    curr_session = WorkSession(id=uuid4(), started_at=datetime.now(), ended_at=None, is_active=True, questions_asked=0)
+    curr_session = WorkSession(id=uuid4(), started_at=datetime.now(), ended_at=None,
+                               is_active=True, questions_asked=0)
     return curr_session
 
 
