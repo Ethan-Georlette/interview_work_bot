@@ -7,7 +7,7 @@ docker exec interview-ollama \
     ollama create interview-agent -f /tmp/Modelfile
 
 
-############ for slack ##################3
+############ for slack ##################
 go to your workspace 
 add developer app 
 add bot token scopes (chat:write,commands)

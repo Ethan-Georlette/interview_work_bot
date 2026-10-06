@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 .idea/
 .vscode/*
+.flake8
 
 # ================================
 # enviorment/secrets
