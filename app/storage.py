@@ -1,10 +1,13 @@
 # read and write to the json
-from app.models import Question
+from app.models import Question, WorkSession
 
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent/"data"
 QUESTIONS_FILE = DATA_DIR / "questions.jsonl"
+SESSION_FILE = DATA_DIR/"current_session.json"
+
+# __________________ question part _____________________
 
 
 def save_question(question: Question) -> None:
@@ -26,3 +29,23 @@ def load_memory_context() -> list[str]:
     except OSError as error:
         print(f"could not read from file: {error}")
         return []
+
+
+# ___________________________session part __________________
+
+def save_curr_session(session: WorkSession) -> None:
+    try:
+        with open(SESSION_FILE, "w", encoding="utf-8") as file:
+            file.write(session.model_dump_json())
+    except OSError as error:
+        print(f"Could not write session: {error}")
+
+
+def load_curr_session() -> WorkSession | None:
+    try:
+        with open(SESSION_FILE, "r", encoding="utf-8") as file:
+                session = WorkSession.model_validate_json(file.read())
+                return session
+    except OSError as error:
+        print(f"could not read from file: {error}")
+        return None

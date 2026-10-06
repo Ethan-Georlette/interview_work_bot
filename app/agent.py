@@ -1,7 +1,11 @@
 # communitcation with ollama agent
+from typing import List
+
 import requests
 
-from app.models import GeneratedQuestion
+from app.models import GeneratedQuestion, Question, WorkSession
+from app.storage import save_curr_session, save_question
+from app.decorators import require_active_session
 
 
 def build_question_prompt(memory_context: list[str]) -> str:
@@ -40,3 +44,18 @@ def ask_ollama(prompt: str) -> GeneratedQuestion | None:
     except requests.exceptions.RequestException as errex:
         print(f"Exception request: {errex}")
         return None
+
+
+@require_active_session
+def generate_question(memory_context: List[str], session: WorkSession) -> Question | None:
+    try:
+        prompt = build_question_prompt(memory_context)
+        answer = ask_ollama(prompt)
+        session.questions_asked+=1
+        save_curr_session(session)
+        question=Question.from_generated(answer)
+        save_question(question)
+        return question
+    except:
+        return None
+

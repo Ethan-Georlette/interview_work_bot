@@ -48,3 +48,11 @@ class Question(GeneratedQuestion):
     @classmethod
     def from_generated(cls, generated: GeneratedQuestion) -> Self:
         return cls(**generated.model_dump(), id=uuid4(), created_at=datetime.now(),)
+
+
+class WorkSession(BaseModel):
+    id: UUID
+    started_at: datetime
+    ended_at: datetime | None
+    is_active: bool
+    questions_asked: int
