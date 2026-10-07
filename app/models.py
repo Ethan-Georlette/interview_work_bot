@@ -56,3 +56,5 @@ class WorkSession(BaseModel):
     ended_at: datetime | None
     is_active: bool
     questions_asked: int
+    slack_channel_id: str
+    current_question: Question | None = None

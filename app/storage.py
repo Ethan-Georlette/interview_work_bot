@@ -1,6 +1,7 @@
 # read and write to the json
 from pathlib import Path
 
+from pydantic import ValidationError
 from app.models import Question, WorkSession
 
 
@@ -50,4 +51,7 @@ def load_curr_session() -> WorkSession | None:
             return session
     except OSError as error:
         print(f"could not read from file: {error}")
+        return None
+    except ValidationError as vErr:
+        print(f"file  not good: {vErr}")
         return None

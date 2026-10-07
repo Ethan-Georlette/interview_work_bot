@@ -1,16 +1,21 @@
 # entering point
-from app.scheduler import scheduler, schedule_next_question
-from app.session import start_session
-from app.storage import save_curr_session
+import os
+
+from dotenv import load_dotenv
+from slack_bolt.adapter.socket_mode import SocketModeHandler
+
+from app.scheduler import scheduler
+from app.slack_bot import app
 
 
 if __name__ == "__main__":
-    session = start_session()
-    save_curr_session(session)
+    load_dotenv()
 
     scheduler.start()
-    schedule_next_question()
 
-    input("Scheduler running. Press Enter to stop...\n")
+    handler = SocketModeHandler(
+        app,
+        os.environ["SLACK_APP_TOKEN"],
+    )
 
-    scheduler.shutdown()
+    handler.start()
