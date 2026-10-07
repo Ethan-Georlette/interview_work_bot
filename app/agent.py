@@ -45,6 +45,39 @@ def ask_ollama(prompt: str) -> GeneratedQuestion | None:
         return None
 
 
+def ask_ollama_answer(question: Question) -> str | None:
+    url = 'http://localhost:11434/api/chat'
+    prompt = f"please give back an answer to the interview question: {question.question}"
+    data = {
+        "model": "interview-agent",
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        "stream": False,
+        "keep_alive": 0,
+    }
+    try:
+        answer = requests.post(url, json=data, timeout=(5, 120))
+        answer.raise_for_status()
+        return answer.json()["message"]["content"]
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+        print(errh.args[0])
+        return None
+    except requests.exceptions.Timeout as errrt:
+        print(f"Time out: {errrt}")
+        return None
+    except requests.exceptions.ConnectionError as conerr:
+        print(f"Connection error: {conerr}")
+        return None
+    except requests.exceptions.RequestException as errex:
+        print(f"Exception request: {errex}")
+        return None
+
+
 @require_active_session
 def generate_question(memory_context: list[str], session: WorkSession) -> Question | None:
     prompt = build_question_prompt(memory_context)

@@ -12,9 +12,9 @@ class QuestionCategory(StrEnum):
     LINUX = "linux"
     DEVOPS = "devops"
     DOCKER = "docker"
-    KUBERNETES = "kubernetes"
+    # KUBERNETES = "kubernetes"
     NETWORKING = "networking"
-    SYSTEM_DESIGN = "system_design"
+    # SYSTEM_DESIGN = "system_design"
 
 
 class GeneratedQuestion(BaseModel):

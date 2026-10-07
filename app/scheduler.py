@@ -22,7 +22,7 @@ def question_job():
                 session.slack_channel_id,
                 question,
             )
-        session.current_question=question
+        session.current_question = question
         save_curr_session(session)
         print(question)
         schedule_next_question()
@@ -30,5 +30,5 @@ def question_job():
 
 def schedule_next_question():
     minutes = randint(30, 60)
-    date = datetime.now() + timedelta(seconds=minutes)
+    date = datetime.now() + timedelta(minutes=minutes)
     scheduler.add_job(question_job, "date", run_date=date)

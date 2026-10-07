@@ -25,3 +25,16 @@ def send_question(channel_id: str, question: Question) -> None:
         channel=channel_id,
         text=text,
     )
+
+
+def send_solution(channel_id: str, question: Question, answer: str) -> None:
+    text = (
+        f"🍌solution🍌\n\n"
+        f"for question: {question.question}\n\n"
+        f"*answer* {answer}"
+    )
+
+    client.chat_postMessage(
+        channel=channel_id,
+        text=text,
+    )

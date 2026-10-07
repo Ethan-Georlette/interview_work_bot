@@ -4,10 +4,10 @@ import os
 from dotenv import load_dotenv
 from slack_bolt import App
 
-from app.agent import generate_question
+from app.agent import generate_question, ask_ollama_answer
 from app.scheduler import schedule_next_question
 from app.session import start_session, stop_session
-from app.slack_service import send_question
+from app.slack_service import send_question, send_solution
 from app.storage import (
     load_curr_session,
     save_curr_session, load_memory_context,
@@ -34,6 +34,7 @@ def handle_work_start(ack, respond, command):
 
     respond("/work-start")
 
+
 @app.command("/task")
 def handle_task(ack, respond, command):
     ack()
@@ -48,9 +49,27 @@ def handle_task(ack, respond, command):
     if question is None:
         respond("problem generating question")
         return
-    send_question(command["channel_id"],question)
-    current_session.current_question=question
+    send_question(command["channel_id"], question)
+    current_session.current_question = question
     save_curr_session(current_session)
+
+
+@app.command("/solution")
+def handle_solution(ack, respond, command):
+    ack()
+    respond("answering...")
+    curr_session = load_curr_session()
+    if curr_session is None or not curr_session.is_active:
+        respond("session is not active")
+        return
+    if curr_session.current_question is None:
+        respond("No current question")
+        return
+    answer = ask_ollama_answer(curr_session.current_question)
+    if answer is None:
+        respond("unsolvable")
+
+    send_solution(command["channel_id"], curr_session.current_question, answer)
 
 
 @app.command("/work-stop")
